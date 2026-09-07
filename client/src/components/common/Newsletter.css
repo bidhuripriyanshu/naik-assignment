@@ -1,0 +1,117 @@
+.newsletter-section {
+  margin-top: 3.5rem;
+  margin-bottom: 4.5rem;
+}
+
+.newsletter-banner {
+  background: linear-gradient(135deg, #14532d 0%, #166534 100%);
+  border-radius: 16px;
+  padding: 1.5rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.newsletter-content {
+  z-index: 2;
+}
+
+.newsletter-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+  color: #ffffff;
+}
+
+.newsletter-subtitle {
+  font-size: 0.85rem;
+  color: #bbf7d0;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+}
+
+.newsletter-form {
+  display: flex;
+  background: white;
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  max-width: 440px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.newsletter-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+}
+
+.newsletter-btn {
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1.35rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover {
+  background: #ea580c;
+  transform: scale(1.02);
+}
+
+.newsletter-success {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.newsletter-chef-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.newsletter-chef-img {
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 900px) {
+  .newsletter-banner {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .newsletter-form {
+    margin: 0 auto;
+  }
+  .newsletter-chef-wrapper {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .newsletter-chef-img {
+    max-height: 110px;
+  }
+}
+
