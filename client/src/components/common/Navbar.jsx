@@ -87,7 +87,8 @@ export default function Navbar() {
     debounceRef.current = setTimeout(async () => {
       try {
         const { data } = await productAPI.getAll({ search: query });
-        setSuggestions((data.products || data || []).slice(0, 5));
+        const list = Array.isArray(data) ? data : (Array.isArray(data?.products) ? data.products : []);
+        setSuggestions(list.slice(0, 5));
       } catch { setSuggestions([]); }
     }, 250);
     return () => clearTimeout(debounceRef.current);

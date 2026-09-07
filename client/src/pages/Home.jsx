@@ -14,11 +14,19 @@ export default function Home() {
   useEffect(() => {
     productAPI.getAll()
       .then(res => {
-        setFeaturedProducts(res.data.products || res.data || []);
+        const data = res.data;
+        if (Array.isArray(data)) {
+          setFeaturedProducts(data);
+        } else if (data && Array.isArray(data.products)) {
+          setFeaturedProducts(data.products);
+        } else {
+          setFeaturedProducts([]);
+        }
         setLoading(false);
       })
       .catch(err => {
         console.error('Failed to load products', err);
+        setFeaturedProducts([]);
         setLoading(false);
       });
   }, []);
@@ -237,7 +245,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="product-grid">
-            {featuredProducts.slice(0, 8).map(product => (
+            {(Array.isArray(featuredProducts) ? featuredProducts : []).slice(0, 8).map(product => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
