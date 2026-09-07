@@ -4,7 +4,6 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 const allowedOrigins = [
@@ -27,6 +26,19 @@ app.use(
   })
 );
 app.use(express.json());
+
+// Database connection middleware for serverless requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      hint: 'Check MONGO_URI in Vercel settings and allow 0.0.0.0/0 in MongoDB Atlas Network Access'
+    });
+  }
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
