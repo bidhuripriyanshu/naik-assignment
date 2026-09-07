@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Product = require('../models/Product');
+const seedData = require('../utils/seedData');
 
 const SERVICEABLE_REGIONS = {
   Pune: [/^(411|412)\d{3}$/],
@@ -39,10 +40,29 @@ const checkPincodeApi = asyncHandler(async (req, res) => {
   res.json(result);
 });
 
+// @desc  Auto-seed database if empty or manual endpoint trigger
+// @route GET/POST /api/products/seed
+const seedProductsApi = asyncHandler(async (req, res) => {
+  await Product.deleteMany({});
+  const created = await Product.insertMany(seedData);
+  res.json({ message: `✅ Successfully seeded ${created.length} products to database!`, count: created.length });
+});
+
 // @desc  Get all products with filters, search, pagination
 // @route GET /api/products
 const getProducts = asyncHandler(async (req, res) => {
   const { keyword, search, category, sort, page = 1, limit = 50 } = req.query;
+
+  // Auto-seed if DB is empty
+  const totalDbCount = await Product.countDocuments();
+  if (totalDbCount === 0) {
+    try {
+      await Product.insertMany(seedData);
+      console.log('🌱 Auto-seeded initial products into empty database');
+    } catch (e) {
+      console.error('Auto-seed failed:', e.message);
+    }
+  }
 
   const query = {};
 
@@ -81,7 +101,7 @@ const getProducts = asyncHandler(async (req, res) => {
   res.json({
     products,
     page: Number(page),
-    pages: Math.ceil(total / Number(limit)),
+    pages: Math.ceil(total / Number(limit)) || 1,
     total,
   });
 });
@@ -214,5 +234,5 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 module.exports = {
   getProducts, autocomplete, getFeaturedProducts, getCategories,
-  getProductById, addReview, createProduct, updateProduct, deleteProduct, checkPincodeApi
+  getProductById, addReview, createProduct, updateProduct, deleteProduct, checkPincodeApi, seedProductsApi
 };

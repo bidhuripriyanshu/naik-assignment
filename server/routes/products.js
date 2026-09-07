@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const {
   getProducts, autocomplete, getFeaturedProducts, getCategories,
-  getProductById, addReview, createProduct, updateProduct, deleteProduct, checkPincodeApi
+  getProductById, addReview, createProduct, updateProduct, deleteProduct, checkPincodeApi, seedProductsApi
 } = require('../controllers/productController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.get('/check-pincode', checkPincodeApi);
+router.all('/seed', seedProductsApi);
 router.get('/autocomplete', autocomplete);
 router.get('/featured', getFeaturedProducts);
 router.get('/categories', getCategories);

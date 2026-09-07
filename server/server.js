@@ -33,7 +33,9 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));
 
-// Health check
+// Root and Health routes
+app.get('/', (req, res) => res.json({ status: 'ok', message: 'Naik Foods API running on Vercel 🌿', endpoints: '/api/products' }));
+app.get('/api', (req, res) => res.json({ status: 'ok', message: 'Naik Foods API running on Vercel 🌿', endpoints: '/api/products' }));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'Naik Foods API running 🌿' }));
 
 // Global error handler
